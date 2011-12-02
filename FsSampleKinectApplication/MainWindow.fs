@@ -2,6 +2,7 @@
 
 open System
 open System.Windows
+open System.Windows.Controls
 open Microsoft.Research.Kinect.Nui
 
 type MainWindow() =
@@ -10,6 +11,11 @@ type MainWindow() =
     Application.LoadComponent(new System.Uri("/FsSampleKinectApplication;component/MainWindow.xaml", System.UriKind.Relative)) :?> Window
 
   let nui = Runtime.Kinects.[0]
+
+  let image = new System.Windows.Controls.Image()
+  do
+    image.Height <- 480.0
+    image.Width <- 640.0
 
   do window.Loaded
      |> Observable.subscribe begin
