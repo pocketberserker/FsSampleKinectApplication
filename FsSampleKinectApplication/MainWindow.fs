@@ -3,6 +3,7 @@
 open System
 open System.Windows
 open System.Windows.Controls
+open System.Windows.Media.Imaging
 open Microsoft.Research.Kinect.Nui
 
 type MainWindow() =
@@ -31,6 +32,15 @@ type MainWindow() =
 
   do window.Unloaded
      |> Observable.subscribe (fun _ -> nui.Uninitialize() )
+     |> ignore
+
+  do nui.VideoFrameReady
+     |> Observable.subscribe begin
+         fun args ->
+           let img = args.ImageFrame.Image
+           let source = BitmapSource.Create(img.Width, img.Height, 96.0, 96.0, Media.PixelFormats.Bgr32, null, img.Bits, img.Width * img.BytesPerPixel)
+           image.Source <- source
+       end
      |> ignore
 
   member this.Window = window
