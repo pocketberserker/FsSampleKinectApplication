@@ -11,6 +11,14 @@ type MainWindow() =
 
   let nui = Runtime.Kinects.[0]
 
+  do window.Loaded
+     |> Observable.subscribe begin
+         fun _ ->
+           nui.Initialize(RuntimeOptions.UseColor)
+           nui.VideoStream.Open(ImageStreamType.Video, 2, ImageResolution.Resolution640x480, ImageType.Color)
+       end
+     |> ignore
+
   member this.Window = window
 
 [<STAThread>]
