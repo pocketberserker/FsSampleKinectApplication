@@ -19,6 +19,10 @@ type MainWindow() =
        end
      |> ignore
 
+  do window.Unloaded
+     |> Observable.subscribe (fun _ -> nui.Uninitialize() )
+     |> ignore
+
   member this.Window = window
 
 [<STAThread>]
