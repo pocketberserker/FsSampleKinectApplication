@@ -17,6 +17,10 @@ type MainWindow() =
     image.Height <- 480.0
     image.Width <- 640.0
 
+  let grid = window.FindName "grid" :?> Grid
+  do
+    image |> grid.Children.Add |> ignore
+
   do window.Loaded
      |> Observable.subscribe begin
          fun _ ->
