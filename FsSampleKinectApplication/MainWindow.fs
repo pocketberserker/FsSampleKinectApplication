@@ -13,9 +13,7 @@ type MainWindow() =
 
   let nui = Runtime.Kinects.[0]
 
-  let grid = window.FindName "grid" :?> Grid
-
-  let kinectImage = grid.FindName "kinectImage" :?> Image
+  let kinectImage = window.FindName "kinectImage" :?> Image
 
   do window.Loaded
      |> Observable.subscribe begin
