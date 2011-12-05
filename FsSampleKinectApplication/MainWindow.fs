@@ -13,14 +13,9 @@ type MainWindow() =
 
   let nui = Runtime.Kinects.[0]
 
-  let image = new System.Windows.Controls.Image()
-  do
-    image.Height <- 480.0
-    image.Width <- 640.0
-
   let grid = window.FindName "grid" :?> Grid
-  do
-    image |> grid.Children.Add |> ignore
+
+  let kinectImage = grid.FindName "kinectImage" :?> Image
 
   do window.Loaded
      |> Observable.subscribe begin
@@ -37,9 +32,9 @@ type MainWindow() =
   do nui.VideoFrameReady
      |> Observable.subscribe begin
          fun args ->
-           let img = args.ImageFrame.Image
-           let source = BitmapSource.Create(img.Width, img.Height, 96.0, 96.0, Media.PixelFormats.Bgr32, null, img.Bits, img.Width * img.BytesPerPixel)
-           image.Source <- source
+           let image = args.ImageFrame.Image
+           let source = BitmapSource.Create(image.Width, image.Height, 96.0, 96.0, Media.PixelFormats.Bgr32, null, image.Bits, image.Width * image.BytesPerPixel)
+           kinectImage.Source <- source
        end
      |> ignore
 
